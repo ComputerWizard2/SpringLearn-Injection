@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+    <util:list id="carList">
+        <value>葵花宝典</value>
+        <value>九阳神功</value>
+        <value>九阴真经</value>
+    </util:list>
+
+    <bean id="books" class="com.luckye.Car" scope="prototype">
+        <property name="list" ref="carList"></property>
+
+
+    </bean>
+<!--    配置bean的路径-->
+<!--        基于xml创建对象-->
+         <bean id="user" class="com.luckye.User" >
+         </bean>
+<!--        基于set方法创建对象-->
+        <bean id="book" class="com.luckye.Books" p:bookName="hello" p:bookPrice="31231">
+<!--            <property name="bookName" value="helloWorld"></property>-->
+<!--            <property name="bookPrice" value="1222"></property>-->
+        </bean>
+
+    <bean id="magezine" class="com.luckye.Magezine">
+        <!--（1）null值-->
+        <property name="name">
+            <null/><!--属性里边添加一个null标签-->
+        </property>
+
+        <!--（2）特殊符号赋值-->
+        <!--属性值包含特殊符号
+          a 把<>进行转义 &lt; &gt;
+          b 把带特殊符号内容写到CDATA
+         -->
+        <property name="price">
+            <value><![CDATA[<<南京>>]]></value>
+        </property>
+
+    </bean>
+    <bean id="userDao" class="com.luckye.UserDao"></bean>
+
+    <bean id="userService" class="com.luckye.UserService">
+        <property name="userDao"  ref="userDao"></property>
+    </bean>
+<!--    内部类-->
+<!--    <bean id="emp" class="com.luckye.Employee">-->
+<!--        <property name="eName" value="hello"></property>-->
+<!--        <property name="gender" value="女 "></property>-->
+<!--        <property name="dept" >-->
+<!--&lt;!&ndash;            内部类&ndash;&gt;-->
+<!--            <bean id="dept" class="com.luckye.Dept">-->
+<!--                <property name="deptName" value="盛大游戏"></property>-->
+<!--            </bean>-->
+<!--        </property>-->
+<!--    </bean>-->
+
+    <bean id="emp" class="com.luckye.Employee">
+    <!--设置两个普通属性-->
+    <property name="EName" value="jams"></property>
+    <property name="gender" value="男"></property>
+    <!--级联赋值-->
+    <property name="dept" ref="dept"></property>
+    <property name="dept.deptName" value="技术部门"></property>
+</bean>
+    <bean id="dept" class="com.luckye.Dept">
+    </bean>
+    <bean id="stu" class="com.luckye.Stu">
+        <property name="cource">
+            <array>
+                <value>hello</value>
+
+                <value>world</value>
+                <value>猜猜猜</value>
+
+            </array>
+        </property>
+        <property name="list">
+            <list>
+                <value>list</value>
+                <value>集合</value>
+
+            </list>
+        </property>
+        <property name="map">
+            <map>
+                <entry key="1" value="hello"/>
+
+                <entry key="hello" value="world"/>
+
+            </map>
+        </property>
+        <property name="set">
+            <set>
+
+                <value>hello</value>
+                <value>hello</value>
+                <value>world</value>
+            </set>
+
+        </property>
+        <property name="cources">
+            <list>
+                <ref bean="course1"></ref>
+                <ref bean="course2"></ref>
+            </list>
+        </property>
+    </bean>
+    <bean id="course1" class="com.luckye.Cource">
+        <property name="courceName" value="Spring5框架"></property>
+    </bean>
+    <bean id="course2" class="com.luckye.Cource">
+        <property name="courceName" value="MyBatis框架"></property>
+    </bean>
+</beans>
